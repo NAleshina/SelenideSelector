@@ -53,4 +53,24 @@ public class DebitCardApplicationTest {
         $(".checkbox_theme_alfa-on-white").shouldHave(Condition.cssClass("input_invalid"));
     }
 
+    @Test
+    void shouldSubmitRequestWithoutName() {
+        open("http://localhost:9999");
+        SelenideElement form = $("form.form_theme_alfa-on-white");
+        form.$("[type=tel]").setValue("+79200000000");
+        form.$("[class=checkbox__box]").click();
+        form.$("[type=button]").click();
+        $(".input_type_text .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+
+    @Test
+    void shouldSubmitRequestWithoutPhone() {
+        open("http://localhost:9999");
+        SelenideElement form = $("form.form_theme_alfa-on-white");
+        form.$("[type=text]").setValue("Буль Пьер");
+        form.$("[class=checkbox__box]").click();
+        form.$("[type=button]").click();
+        $(".input_type_tel .input__sub").shouldHave(exactText("Поле обязательно для заполнения"));
+    }
+
 }
